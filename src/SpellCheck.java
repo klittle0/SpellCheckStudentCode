@@ -104,7 +104,12 @@ public class SpellCheck {
         }
 
 
+    // New pseudocode 10/1:
+        // Create a new Trie
+        // Go through every word in dictionary and add it to the Trie
 
+        // Make a second tree to represent the misspelled words
+        //
 
         return null;
     }
