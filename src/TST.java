@@ -38,23 +38,38 @@ public class TST {
             // Don't increment depth here, since the current node isn't part of the word
             insert(currentNode.getNext()[2], s, depth);
         }
-        // Go straight if letter ==
-        if (currentLetter == currentNode.value){
-            if (currentNode.getNext()[1] == null){
-                currentNode.getNext()[1] = new Node(1);
-            }
-            insert(currentNode.getNext()[1], s, depth + 1);
+        // Otherwise, go straight
+        if (currentNode.getNext()[1] == null){
+            currentNode.getNext()[1] = new Node(1);
         }
+        insert(currentNode.getNext()[1], s, depth + 1);
     }
 
     // identify whether a particular string exists in the TST
     // Change return type to boolean
-    public void lookup(String s){
-
+    public boolean lookup(Node currentNode, String s, int depth){
+        // BASE CASE
+        // If we've reached the end of the string
+        if (s.length() == depth){
+            return currentNode.isWord();
+        }
+        // RECURSIVE STEPS
+        // If the letter <
+        if ((int) s.charAt(depth) < currentNode.value){
+            return lookup(currentNode.getNext()[0], s, depth + 1);
+        }
+        // If the letter >
+        if ((int) s.charAt(depth) > currentNode.value){
+            return lookup(currentNode.getNext()[2], s, depth + 1);
+        }
+        // otherwise, go straight down
+        if (s.length()> 1){
+            return lookup(currentNode.getNext()[1], s, depth + 1);
+        }
+        return false;
     }
 
     // Prints out the whole tree for debugging
     public void printTree(){
-
     }
 }
