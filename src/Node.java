@@ -2,7 +2,7 @@ public class Node {
     boolean isWord;
     Node[] next;
     // What value should be associated with this??? An int? A char?
-    int value;
+    char value;
 
     static int TRIE_CHILDREN = 256;
     static int TST_CHILDREN = 3;
@@ -17,7 +17,8 @@ public class Node {
         isWord = false;
         // 3 null nodes branch off of each node
         next = new Node[TST_CHILDREN];
-        value = -1;
+        // Change to something else
+        value = '\0';
     }
 
     // Returns whether a real word ends here
@@ -30,8 +31,8 @@ public class Node {
         isWord = true;
     }
 
-    public void setValue(int i){
-        value = i;
+    public void setValue(char a){
+        value = a;
     }
 
     public Node[] getNext(){

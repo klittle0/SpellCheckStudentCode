@@ -1,11 +1,11 @@
+import java.util.ArrayList;
+
 public class TST {
     Node root;
 
     // Constructor
     public TST(){
         // Makes the 1st node.
-        // Do I need to set it equal to the value of the 1st letter shown in dictionary?
-        // YES
         root = new Node(1);
     }
 
@@ -17,59 +17,62 @@ public class TST {
             return;
         }
         // RECURSIVE STEPS:
-        int currentLetter = s.charAt(depth);
-        // Set the node value, if it doesn't currently have a value
-        if (currentNode.value == -1){
+        char currentLetter = s.charAt(depth);
+        // If the node is uninitialized, set its value
+        if (currentNode.value == '\0') {
             currentNode.setValue(currentLetter);
         }
-        // Go left if letter <
+        // Go left if letter < current node
         if (currentLetter < currentNode.value){
             if (currentNode.getNext()[0] == null){
                 currentNode.getNext()[0] = new Node(1);
             }
-            // Don't increment depth here, since the current node isn't part of the word
+            // Don't increment depth here, since we skip the current node
             insert(currentNode.getNext()[0], s, depth);
         }
-        // Go right if letter >
-        if (currentLetter > currentNode.value){
+        // Go right if letter > current node
+        else if (currentLetter > currentNode.value){
             if (currentNode.getNext()[2] == null){
                 currentNode.getNext()[2] = new Node(1);
             }
-            // Don't increment depth here, since the current node isn't part of the word
+            // Don't increment depth here, since we skip the current node
             insert(currentNode.getNext()[2], s, depth);
         }
-        // Otherwise, go straight
-        if (currentNode.getNext()[1] == null){
-            currentNode.getNext()[1] = new Node(1);
+        // Otherwise, letter == current node, so go straight down
+        else{
+            if (currentNode.getNext()[1] == null){
+                currentNode.getNext()[1] = new Node(1);
+            }
+            insert(currentNode.getNext()[1], s, depth + 1);
         }
-        insert(currentNode.getNext()[1], s, depth + 1);
     }
 
+    // Error here!!
     // identify whether a particular string exists in the TST
-    // Change return type to boolean
     public boolean lookup(Node currentNode, String s, int depth){
-        // BASE CASE
-        // If we've reached the end of the string
+        // BASE CASES
+        // If we run into a null node, the word can't exist in the TST
+        if (currentNode == null) {
+            return false;
+        }
+        // If we've reached the end of the string, return whether we've found a word
         if (s.length() == depth){
             return currentNode.isWord();
         }
-        // RECURSIVE STEPS
-        // If the letter <
-        if ((int) s.charAt(depth) < currentNode.value){
-            return lookup(currentNode.getNext()[0], s, depth + 1);
-        }
-        // If the letter >
-        if ((int) s.charAt(depth) > currentNode.value){
-            return lookup(currentNode.getNext()[2], s, depth + 1);
-        }
-        // otherwise, go straight down
-        if (s.length()> 1){
-            return lookup(currentNode.getNext()[1], s, depth + 1);
-        }
-        return false;
-    }
 
-    // Prints out the whole tree for debugging
-    public void printTree(){
+        // RECURSIVE STEPS
+        char currentLetter = s.charAt(depth);
+        // Go left if the letter < char at current node
+        if (currentLetter < currentNode.value){
+            // Don't increment depth, since we skipped the current letter
+            return lookup(currentNode.getNext()[0], s, depth);
+        }
+        // Go right if the letter > char at current node
+        if (currentLetter > currentNode.value){
+            // Don't increment depth here, since we skip the current node
+            return lookup(currentNode.getNext()[2], s, depth);
+        }
+        // otherwise, letter == char at current node, so go straight down
+        return lookup(currentNode.getNext()[1], s, depth + 1);
     }
 }

@@ -1,18 +1,11 @@
-import java.util.ArrayList;
-
 public class Trie {
     Node root;
-    ArrayList<String> test;
 
     // Constructor
     public Trie(){
-        // Makes the 1st node.
-        // Do I need to set it equal to the value of the 1st letter shown in dictionary?
         root = new Node();
-        test = new ArrayList<String>();
     }
 
-    // THIS IS WORKING.
     public void insert(Node currentNode, String s, int depth){
         // BASE CASE:
         // Once you've reached the end of the word, aka the depth = string length, stop recursion
@@ -35,7 +28,6 @@ public class Trie {
         insert(currentNode.getNext()[currentLetter], s, depth + 1);
     }
 
-    // Not working. For some reason, not updating every time I add a new word??
     // Identify whether a particular word (s) exists in the Trie
     public boolean lookup(Node currentNode, String s, int depth){
         // BASE CASES
