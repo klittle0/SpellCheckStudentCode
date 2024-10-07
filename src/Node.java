@@ -26,7 +26,6 @@ public class Node {
     // Sets it so that the real word ends here
     public void setWord(){
         isWord = true;
-
     }
 
     public Node[] getNext(){

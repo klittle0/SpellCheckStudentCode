@@ -19,19 +19,38 @@ public class SpellCheck {
      */
     public String[] checkWords(String[] text, String[] dictionary) {
 
-
-
-    // New pseudocode 10/1:
+        ArrayList<String> misspelled = new ArrayList<String>();
         // Create a new Trie
         Trie dictionaryTrie = new Trie();
         // Go through every word in dictionary and add it to the Trie
         for (String word: dictionary){
             dictionaryTrie.insert(dictionaryTrie.root, word, 0);
         }
-        System.out.println(dictionaryTrie);
-
+        // Print every word added to dictionary
+        for (String word: dictionaryTrie.test){
+            System.out.println(word);
+        }
         // Make a second tree to represent the misspelled words
+        Trie misspelledTrie = new Trie();
+        // Go through text & see if every word is in the dictionary
+        for (String word: text){
+            // If the word doesn't exist in the dictionary & if the word is not already present in misspelled Trie
+            if (!dictionaryTrie.lookup(dictionaryTrie.root, word, 0)){
+                if (!misspelledTrie.lookup(dictionaryTrie.root, word, 0)){
+                    // Insert the word to misspelled
+                    misspelledTrie.insert(misspelledTrie.root, word, 0);
+                    misspelled.add(word);
+                }
+            }
+        }
+        // Convert arraylist of misspelled into array
+        String[] misspelledList = new String[misspelled.size()];
+        for (int i = 0; i < misspelled.size(); i++){
+            misspelledList[i] = misspelled.get(i);
+            // PRINT CHECK!
+            System.out.println(misspelledList[i]);
+        }
         //anytime a word is added to the Trie, also add it to an array, so that it's easy to return at the end
-        return null;
+        return misspelledList;
     }
 }
