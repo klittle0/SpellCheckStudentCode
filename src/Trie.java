@@ -39,11 +39,12 @@ public class Trie {
     // Identify whether a particular word (s) exists in the Trie
     public boolean lookup(Node currentNode, String s, int depth){
         // BASE CASES
-        // aka if you've reached the end of Trie & haven't found the word
+        // aka if you've reached the end of Trie & haven't found the word, aka the word doesn't exist
         if (currentNode == null){
             // System.out.println("false: " + s);
             return false;
         }
+        // I THINK THE ERROR IS HERE
         // If you've reached the length of the word, return whether it exists in Trie or not
         if (depth == s.length()){
             return currentNode.isWord();
