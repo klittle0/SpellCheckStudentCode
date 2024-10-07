@@ -18,8 +18,6 @@ public class SpellCheck {
      * @return String[] of all misspelled words in the order they appear in text. No duplicates.
      */
     public String[] checkWords(String[] text, String[] dictionary) {
-
-        ArrayList<String> misspelled = new ArrayList<String>();
         // Create a new Trie
         Trie dictionaryTrie = new Trie();
         // Go through every word in dictionary and add it to the Trie
@@ -32,9 +30,9 @@ public class SpellCheck {
         }
         // Make a second tree to represent the misspelled words
         Trie misspelledTrie = new Trie();
-        // Go through text & see if every word is in the dictionary
+        ArrayList<String> misspelled = new ArrayList<String>();
         for (String word: text){
-            // If the word doesn't exist in the dictionary & if the word is not already present in misspelled Trie
+            // If a word doesn't exist in the dictionary & the misspelled Trie
             if (!dictionaryTrie.lookup(dictionaryTrie.root, word, 0)){
                 if (!misspelledTrie.lookup(dictionaryTrie.root, word, 0)){
                     // Insert the word to misspelled

@@ -1,6 +1,7 @@
 public class Node {
     boolean isWord;
     Node[] next;
+    int value;
 
     static int TRIE_CHILDREN = 256;
     static int TST_CHILDREN = 3;
@@ -15,7 +16,7 @@ public class Node {
     public Node(int i){
         isWord = false;
         next = new Node[TST_CHILDREN];
-
+        value = -1;
     }
 
     // Returns whether a real word ends here
@@ -26,6 +27,10 @@ public class Node {
     // Sets it so that the real word ends here
     public void setWord(){
         isWord = true;
+    }
+
+    public void setValue(int value){
+        this.value = value;
     }
 
     public Node[] getNext(){
